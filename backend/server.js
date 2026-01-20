@@ -10,12 +10,12 @@ const __dirname = path.resolve();
 const app = express();
 const port = process.env.PORT;
 
-app.use(cors({origin:process.env.CLIENT_URL,credentials:true}));
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
 
 
 app.get('/api/message', (req, res) => {
-    res.json({ 
+    res.json({
         message: 'Hello from Express Backend!',
         timestamp: new Date().toISOString()
     });
@@ -23,11 +23,21 @@ app.get('/api/message', (req, res) => {
 
 // For Production
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+    // //app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-    app.get("/{*any}", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-    })
+    // app.get("/{*any}", (req, res) => {
+    //     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    // })
+
+    // __dirname is the 'backend' folder. 
+    // Since 'mv' puts 'dist' inside 'backend', the path is now:
+    const distPath = path.join(__dirname, 'dist');
+
+    app.use(express.static(distPath));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+    });
 }
 
 app.listen(port, () => {
