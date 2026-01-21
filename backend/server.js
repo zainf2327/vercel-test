@@ -9,6 +9,9 @@ const port = process.env.PORT||3000;
 
 app.use(cors());
  
+app.get('/api/message', (req, res) => {
+  res.json({ message: 'Hello from Express on Vercel!' });
+});
 app.get('/', (req, res) => {
   res.json({ message: 'Hello from Express on Vercel!' });
 });
