@@ -6,7 +6,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/message')
+    fetch('https://vercel-test-rust-tau.vercel.app')
       .then(res => res.json())
       .then(data => {
         setData(data)
